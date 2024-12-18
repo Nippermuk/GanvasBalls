@@ -32,11 +32,12 @@ export class AppComponent implements AfterViewInit {
     const canvas = document.getElementById('stage') as HTMLCanvasElement;
     const container = canvas.parentElement as HTMLElement;
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
-    const resizeCanvas = () => {
-      canvas.width = container.clientWidth-3;
-      canvas.height = container.clientHeight-6;
-    };
-    new ResizeObserver(resizeCanvas).observe(container);
+    //TODO: Fix
+    //const resizeCanvas = () => {
+    //  canvas.width = container.clientWidth-3;
+    //  canvas.height = container.clientHeight-6;
+    //};
+    //new ResizeObserver(resizeCanvas).observe(container);
 
     if (!ctx) {
       console.error('Canvas-Kontext konnte nicht geladen werden.');

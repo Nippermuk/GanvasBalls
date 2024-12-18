@@ -29,8 +29,8 @@ export class AppComponent implements AfterViewInit {
     this.loadConfigFromCookie(); // Config beim Laden initialisieren
 
     this.handyPreset.canvasheight = 3000;
-    this.config.radius = 50;
-    this.config.clearcanvas = false;
+    this.handyPreset.radius = 50;
+    this.handyPreset.clearcanvas = false;
   }
 
   startAnimation(): void {

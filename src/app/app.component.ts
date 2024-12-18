@@ -25,6 +25,13 @@ export class AppComponent implements AfterViewInit {
   constructor(public dialog: MatDialog) {}
 
   ngAfterViewInit(): void {
+    const canvas = document.getElementById('stage') as HTMLCanvasElement;
+
+    // Verhindert Pull-to-Refresh und andere Touch-Events
+    canvas.addEventListener('touchstart', (event) => event.preventDefault(), { passive: false });
+    canvas.addEventListener('touchmove', (event) => event.preventDefault(), { passive: false });
+    canvas.addEventListener('touchend', (event) => event.preventDefault(), { passive: false });
+
     this.startAnimation();
     this.loadConfigFromCookie(); // Config beim Laden initialisieren
 

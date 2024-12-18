@@ -1,0 +1,36 @@
+p {
+  font-family: Lato;
+}
+
+canvas {
+  border: 2px solid rgba(0,0,0,0.12);
+  transition: 300ms;
+  border-radius: 4px;
+}
+
+canvas:hover {
+  border: 2px solid rgba(0,0,0,0.54);
+}
+.canvas-container {
+  position: relative;
+  display: inline-block;
+  border: 1px solid #ccc;
+  resize: both; /* Ermöglicht das Ziehen */
+  overflow: hidden;
+}
+
+#stage {
+  display: block;
+  width: 100%; /* Initial passt es sich an den Container an */
+  height: 100%;
+}
+
+.resize-handle {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  cursor: se-resize; /* Zeigt den Resize-Cursor an */
+}

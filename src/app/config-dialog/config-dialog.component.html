@@ -1,0 +1,82 @@
+<h1 mat-dialog-title>Config Einstellungen</h1>
+<div mat-dialog-content class="config-form">
+  <button mat-raised-button (click)="createPreset()">Create Preset</button>
+  <!-- Physik-Einstellungen -->
+  <h2>Physics Settings</h2>
+  <div class="form-group">
+    <mat-form-field appearance="fill">
+      <mat-label>Resistance</mat-label>
+      <input matInput type="number" [(ngModel)]="data.config.resistance" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Friction</mat-label>
+      <input matInput type="number" [(ngModel)]="data.config.friction" />
+    </mat-form-field>
+    <mat-checkbox [(ngModel)]="data.config.disablespeedloss">
+      Disable Speed Loss
+    </mat-checkbox>
+    <mat-checkbox [(ngModel)]="data.config.disablegravity">
+      Disable Gravity
+    </mat-checkbox>
+    <mat-form-field appearance="fill">
+      <mat-label>Gravity</mat-label>
+      <input matInput type="number" [(ngModel)]="data.config.gravity" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Bounce</mat-label>
+      <input matInput type="number" [(ngModel)]="data.config.bounce" />
+    </mat-form-field>
+  </div>
+
+  <!-- Erscheinung -->
+  <h2>Appearance</h2>
+  <div class="form-group">
+    <mat-checkbox [(ngModel)]="data.config.clearcanvas">
+      Clear Canvas
+    </mat-checkbox>
+    <mat-form-field appearance="fill">
+      <mat-label>Radius</mat-label>
+      <input matInput type="number" [(ngModel)]="data.config.radius" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Color Speed</mat-label>
+      <input matInput type="number" [(ngModel)]="data.config.colorspeed" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Color Brightness</mat-label>
+      <input matInput type="number" [(ngModel)]="data.config.colorbrightness" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Color Darkness</mat-label>
+      <input matInput type="number" [(ngModel)]="data.config.colordarkness" />
+    </mat-form-field>
+  </div>
+
+  <!-- Anzeigeoptionen -->
+  <h2>Display Options</h2>
+  <div class="form-group">
+    <mat-checkbox [(ngModel)]="data.config.smoothlines">
+      Smooth Lines
+    </mat-checkbox>
+    <mat-checkbox [(ngModel)]="data.config.allballs" (change)="toggleAllBalls($event.checked)">
+      Show all Balls
+    </mat-checkbox>
+    <mat-checkbox [(ngModel)]="data.config.ball1" (change)="updateAllBallsStatus()">
+      Show Ball 1
+    </mat-checkbox>
+    <mat-checkbox [(ngModel)]="data.config.ball2" (change)="updateAllBallsStatus()">
+      Show Ball 2
+    </mat-checkbox>
+    <mat-checkbox [(ngModel)]="data.config.ball3" (change)="updateAllBallsStatus()">
+      Show Ball 3
+    </mat-checkbox>
+    <mat-checkbox [(ngModel)]="data.config.ball4" (change)="updateAllBallsStatus()">
+      Show Ball 4
+    </mat-checkbox>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">Abbrechen</button>
+  <button mat-button color="primary" (click)="save()">Speichern</button>
+</div>

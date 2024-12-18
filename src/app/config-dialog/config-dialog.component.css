@@ -1,0 +1,30 @@
+/* Allgemeines Styling */
+.config-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px; /* Abstand zwischen Gruppen */
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 16px;
+  color: #3f51b5; /* Material-Blau */
+}
+
+/* Gruppierung der Eingabeelemente */
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; /* Abstand zwischen Elementen */
+}
+
+/* Mat-Form-Field-Styling */
+mat-form-field {
+  flex: 1 1 300px; /* Responsive Breite */
+  min-width: 200px;
+}
+
+/* Checkbox Styling */
+mat-checkbox {
+  flex: 1 1 100%;
+}

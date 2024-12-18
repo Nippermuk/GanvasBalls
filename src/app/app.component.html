@@ -21,6 +21,7 @@
       </button>
       <button mat-raised-button (click)="selectPreset()">Preset</button>
       <button mat-raised-button (click)="clearCanvas()">Clear!</button>
+      <button mat-raised-button (click)="onSaveConfig()">Config speichern</button>
     </div>
     <h1>speed: {{Math.round(Math.hypot(Math.abs(this.config.lastX - this.config.currentX), Math.abs(this.config.lastY - this.config.currentY)))}}</h1>
   </div>

@@ -20,6 +20,7 @@ export class AppComponent implements AfterViewInit {
 
   config = new Config();
   preset = new Config();
+  distanceTravelled = 0;
 
   constructor(public dialog: MatDialog) {}
 
@@ -201,6 +202,9 @@ export class AppComponent implements AfterViewInit {
         ctx.fill();
       }
 
+      //calculateDistanceTravledele
+
+
       requestAnimationFrame(draw); // Nächsten Frame anfordern
     };
 
@@ -243,6 +247,7 @@ export class AppComponent implements AfterViewInit {
     // ctx.clearRect(0, 0, canvas.width, canvas.height); // Canvas leeren
   }
 
+  protected readonly Math = Math;
 }
 export class Config {
   x = 50; // Startposition des Kreises

@@ -7,9 +7,14 @@
     </canvas>
     <div class="resize-handle"></div>
   </div>
-  <button mat-icon-button (click)="openConfigDialog()">
-    <mat-icon>settings</mat-icon>
-  </button>
-  <button mat-raised-button (click)="selectPreset()">Preset</button>
-  <button mat-raised-button (click)="clearCanvas()">Clear!</button>
+  <div style="display: flex; flex-direction: column">
+    <div>
+      <button mat-icon-button (click)="openConfigDialog()">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <button mat-raised-button (click)="selectPreset()">Preset</button>
+      <button mat-raised-button (click)="clearCanvas()">Clear!</button>
+    </div>
+    <h1>speed: {{Math.round(Math.hypot(Math.abs(this.config.lastX - this.config.currentX), Math.abs(this.config.lastY - this.config.currentY)))}}</h1>
+  </div>
 </div>

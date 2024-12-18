@@ -212,7 +212,6 @@ export class AppComponent implements AfterViewInit {
 
       frameCounter++;
       if (frameCounter % 60 === 0) {
-        console.log("freem ")
         this.saveConfigToCookie();
       }
 
@@ -249,14 +248,19 @@ export class AppComponent implements AfterViewInit {
 
     if (event instanceof MouseEvent) {
       // Desktop: Maus-Position
-      this.config.mouseX = event.clientX - rect.left;
-      this.config.mouseY = event.clientY - rect.top;
+      const scaleX = canvas.width / rect.width; // Verhältnis der Breite
+      const scaleY = canvas.height / rect.height; // Verhältnis der Höhe
+      this.config.mouseX = (event.clientX - rect.left) * scaleX;
+      this.config.mouseY = (event.clientY - rect.top) * scaleY;
     } else if (event instanceof TouchEvent && event.touches.length > 0) {
       // Mobile: Touch-Position
       const touch = event.touches[0];
-      this.config.mouseX = touch.clientX - rect.left;
-      this.config.mouseY = touch.clientY - rect.top;
+      const scaleX = canvas.width / rect.width; // Verhältnis der Breite
+      const scaleY = canvas.height / rect.height; // Verhältnis der Höhe
+      this.config.mouseX = (touch.clientX - rect.left) * scaleX;
+      this.config.mouseY = (touch.clientY - rect.top) * scaleY;
     }
+
   }
 
   selectPreset(preset: number) {

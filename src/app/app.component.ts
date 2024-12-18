@@ -20,13 +20,17 @@ export class AppComponent implements AfterViewInit {
 
   config = new Config();
   preset = new Config();
-  distanceTravelled = 0;
+  handyPreset = new Config();
 
   constructor(public dialog: MatDialog) {}
 
   ngAfterViewInit(): void {
     this.startAnimation();
     this.loadConfigFromCookie(); // Config beim Laden initialisieren
+
+    this.handyPreset.canvasheight = 3000;
+    this.config.radius = 50;
+    this.config.clearcanvas = false;
   }
 
   startAnimation(): void {
@@ -250,8 +254,14 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  selectPreset() {
-    this.config = this.preset;
+  selectPreset(preset: number) {
+    switch (preset) {
+      case 1:
+        this.config = this.preset;
+        break;
+      case 2:
+        this.config = this.handyPreset;
+    }
   }
 
   clearCanvas() {

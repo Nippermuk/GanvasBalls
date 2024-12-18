@@ -73,6 +73,14 @@
     <mat-checkbox [(ngModel)]="data.config.ball4" (change)="updateAllBallsStatus()">
       Show Ball 4
     </mat-checkbox>
+    <mat-form-field appearance="fill">
+      <mat-label>Canvas height</mat-label>
+      <input matInput type="number" [(ngModel)]="data.config.canvasheight" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Canvas width</mat-label>
+      <input matInput type="number" [(ngModel)]="data.config.canvaswidth" />
+    </mat-form-field>
   </div>
 </div>
 

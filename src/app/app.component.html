@@ -2,7 +2,8 @@
   <div class="canvas-container">
     <canvas
       id="stage"
-      width="1400"
+      [width]="config.canvaswidth"
+      [height]="config.canvasheight"
       height="700"
       (mousedown)="mousedown(true)"
       (mouseup)="mousedown(false)"

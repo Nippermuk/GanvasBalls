@@ -293,4 +293,6 @@ export class Config {
   allballs = true;
   smoothlines = true;
   clearcanvas = true;
+  canvasheight = 800;
+  canvaswidth = 1400;
 }

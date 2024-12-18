@@ -14,7 +14,7 @@
     </canvas>
     <div class="resize-handle"></div>
   </div>
-  <div style="display: flex; flex-direction: column">
+  <div *ngIf="!config.fullscreen" style="display: flex; flex-direction: column">
     <div>
       <button mat-icon-button (click)="openConfigDialog()">
         <mat-icon>settings</mat-icon>

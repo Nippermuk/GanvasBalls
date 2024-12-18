@@ -4,6 +4,7 @@ import {MatIcon} from '@angular/material/icon';
 import {MatDialog} from '@angular/material/dialog';
 import {ConfigDialogComponent} from './config-dialog/config-dialog.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     MatIconButton,
     MatIcon,
-    MatButton
+    MatButton,
+    NgIf
   ],
   styleUrls: ['./app.component.css']
 })
@@ -31,6 +33,26 @@ export class AppComponent implements AfterViewInit {
     canvas.addEventListener('touchstart', (event) => event.preventDefault(), { passive: false });
     canvas.addEventListener('touchmove', (event) => event.preventDefault(), { passive: false });
     canvas.addEventListener('touchend', (event) => event.preventDefault(), { passive: false });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'f' || event.key === 'F') {
+        this.toggleFullscreen();
+      }
+    });
+
+    let lastTap = 0; // Zeitpunkt des letzten Taps
+
+    canvas.addEventListener('touchstart', (event) => {
+      const currentTime = new Date().getTime();
+      const tapGap = currentTime - lastTap;
+
+      if (tapGap < 300 && tapGap > 0) {
+        // Doppel-Tap erkannt
+        this.toggleFullscreen();
+      }
+
+      lastTap = currentTime;
+    });
 
     this.startAnimation();
     this.loadConfigFromCookie(); // Config beim Laden initialisieren
@@ -311,9 +333,49 @@ export class AppComponent implements AfterViewInit {
     }
   }
 
-  onSaveConfig(): void {
-    this.saveConfigToCookie(); // Config manuell speichern
+  toggleFullscreen(): void {
+    const canvas = document.getElementById('stage') as HTMLCanvasElement;
+    const container = document.documentElement; // Gesamtes Dokument
+
+    this.config.fullscreen = !this.config.fullscreen;
+
+    if (this.config.fullscreen) {
+      // Vollbildmodus aktivieren
+      const requestFullscreen = container.requestFullscreen
+        || (container as any).webkitRequestFullscreen
+        || (container as any).msRequestFullscreen
+        || (container as any).mozRequestFullScreen;
+
+      if (requestFullscreen) {
+        requestFullscreen.call(container).then(() => {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }).catch(err => {
+          console.error("Fehler beim Aktivieren des Vollbildmodus:", err);
+        });
+      } else {
+        console.warn("Fullscreen API wird nicht unterstützt.");
+      }
+    } else {
+      // Vollbildmodus verlassen
+      const exitFullscreen = document.exitFullscreen
+        || (document as any).webkitExitFullscreen
+        || (document as any).msExitFullscreen
+        || (document as any).mozCancelFullScreen;
+
+      if (exitFullscreen) {
+        exitFullscreen.call(document).then(() => {
+          canvas.width = this.config.canvaswidth;
+          canvas.height = this.config.canvasheight;
+        }).catch(err => {
+          console.error("Fehler beim Verlassen des Vollbildmodus:", err);
+        });
+      } else {
+        console.warn("Fullscreen API wird nicht unterstützt.");
+      }
+    }
   }
+
 
   protected readonly Math = Math;
 }
@@ -353,4 +415,5 @@ export class Config {
   clearcanvas = true;
   canvasheight = 800;
   canvaswidth = 1400;
+  fullscreen = false;
 }

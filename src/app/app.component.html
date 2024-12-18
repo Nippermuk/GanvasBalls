@@ -1,9 +1,15 @@
 <div style="display: flex; align-items: center;">
   <div class="canvas-container">
-    <canvas id="stage" width="1400" height="700"
-            (mousedown)="mousedown(true)"
-            (mouseup)="mousedown(false)"
-            (mousemove)="getCursor($event)">
+    <canvas
+      id="stage"
+      width="1400"
+      height="700"
+      (mousedown)="mousedown(true)"
+      (mouseup)="mousedown(false)"
+      (mousemove)="getCursor($event)"
+      (touchstart)="mousedown(true); getCursor($event)"
+      (touchend)="mousedown(false)"
+      (touchmove)="getCursor($event)">
     </canvas>
     <div class="resize-handle"></div>
   </div>

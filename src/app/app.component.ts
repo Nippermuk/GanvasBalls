@@ -226,17 +226,26 @@ export class AppComponent implements AfterViewInit {
   }
 
   mousedown(isMousedown: boolean) {
-    if(!isMousedown && this.config.wasMousedown) {
+    if (!isMousedown && this.config.wasMousedown) {
       this.config.wasMousedown = false;
     }
-    this.config.isMousedown = isMousedown
+    this.config.isMousedown = isMousedown;
   }
 
-  getCursor(event: any) {
+  getCursor(event: MouseEvent | TouchEvent) {
     const canvas = document.getElementById('stage') as HTMLCanvasElement;
     const rect = canvas.getBoundingClientRect();
-    this.config.mouseX = event.clientX - rect.left;
-    this.config.mouseY = event.clientY - rect.top;
+
+    if (event instanceof MouseEvent) {
+      // Desktop: Maus-Position
+      this.config.mouseX = event.clientX - rect.left;
+      this.config.mouseY = event.clientY - rect.top;
+    } else if (event instanceof TouchEvent && event.touches.length > 0) {
+      // Mobile: Touch-Position
+      const touch = event.touches[0];
+      this.config.mouseX = touch.clientX - rect.left;
+      this.config.mouseY = touch.clientY - rect.top;
+    }
   }
 
   selectPreset() {

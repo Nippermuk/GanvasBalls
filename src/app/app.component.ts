@@ -49,6 +49,8 @@ export class AppComponent implements AfterViewInit {
       return;
     }
 
+    let frameCounter = 0;
+
     const draw = () => {
       if(this.config.clearcanvas) {
         ctx.clearRect(0, 0, canvas.width, canvas.height); // Canvas leeren
@@ -208,8 +210,11 @@ export class AppComponent implements AfterViewInit {
         ctx.fill();
       }
 
-      //calculateDistanceTravledele
-
+      frameCounter++;
+      if (frameCounter % 60 === 0) {
+        console.log("freem ")
+        this.saveConfigToCookie();
+      }
 
       requestAnimationFrame(draw); // Nächsten Frame anfordern
     };
@@ -286,18 +291,12 @@ export class AppComponent implements AfterViewInit {
   saveConfigToCookie(): void {
     const configString = JSON.stringify(this.config);
     this.setCookie('config', configString, 7); // Speichere für 7 Tage
-    console.log('Config gespeichert:', configString);
   }
 
   loadConfigFromCookie(): void {
     const configString = this.getCookie('config');
     if (configString) {
-      try {
-        this.config = JSON.parse(configString);
-        console.log('Config geladen:', this.config);
-      } catch (error) {
-        console.error('Fehler beim Laden des Config-Cookies:', error);
-      }
+      this.config = JSON.parse(configString);
     }
   }
 

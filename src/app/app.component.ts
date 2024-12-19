@@ -139,16 +139,18 @@ export class AppComponent implements AfterViewInit {
         this.config.vx = this.config.currentX - this.config.lastX;
       }
 
-      if (this.config.y > canvas.height - this.config.radius && this.config.vy > 0) { // Boden erreicht
-        this.config.vy *= this.config.bounce; // Rücksprung (Geschwindigkeit umkehren)
-      } else if (this.config.y < this.config.radius && this.config.vy < 0) { // Decke erreicht
-        this.config.vy *= this.config.bounce; // Rücksprung (Geschwindigkeit umkehren)
-      }
+      if(!this.config.disableBorders) {
+        if (this.config.y > canvas.height - this.config.radius && this.config.vy > 0) { // Boden erreicht
+          this.config.vy *= this.config.bounce; // Rücksprung (Geschwindigkeit umkehren)
+        } else if (this.config.y < this.config.radius && this.config.vy < 0) { // Decke erreicht
+          this.config.vy *= this.config.bounce; // Rücksprung (Geschwindigkeit umkehren)
+        }
 
-      if (this.config.x > canvas.width - this.config.radius && this.config.vx > 0) { // Boden erreicht
-        this.config.vx *= this.config.bounce; // Rücksprung (Geschwindigkeit umkehren)
-      } else if (this.config.x < this.config.radius && this.config.vx < 0) { // Decke erreicht
-        this.config.vx *= this.config.bounce; // Rücksprung (Geschwindigkeit umkehren)
+        if (this.config.x > canvas.width - this.config.radius && this.config.vx > 0) { // Boden erreicht
+          this.config.vx *= this.config.bounce; // Rücksprung (Geschwindigkeit umkehren)
+        } else if (this.config.x < this.config.radius && this.config.vx < 0) { // Decke erreicht
+          this.config.vx *= this.config.bounce; // Rücksprung (Geschwindigkeit umkehren)
+        }
       }
 
       if(!this.config.disablegravity){
@@ -360,6 +362,9 @@ export class AppComponent implements AfterViewInit {
     this.config.fullscreen = !this.config.fullscreen;
 
     if (this.config.fullscreen) {
+
+      const dpr = window.devicePixelRatio || 1;
+
       // Vollbildmodus aktivieren
       const requestFullscreen = container.requestFullscreen
         || (container as any).webkitRequestFullscreen
@@ -368,8 +373,8 @@ export class AppComponent implements AfterViewInit {
 
       if (requestFullscreen) {
         requestFullscreen.call(container).then(() => {
-          canvas.width = window.innerWidth;
-          canvas.height = window.innerHeight;
+          canvas.width = window.innerWidth * dpr;
+          canvas.height = window.innerHeight * dpr;
         }).catch(err => {
           console.error("Fehler beim Aktivieren des Vollbildmodus:", err);
         });
@@ -436,4 +441,5 @@ export class Config {
   canvaswidth = 1400;
   fullscreen = false;
   enableOrbit = true;
+  disableBorders = false;
 }

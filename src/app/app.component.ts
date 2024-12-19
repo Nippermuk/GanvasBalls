@@ -24,6 +24,7 @@ export class AppComponent implements AfterViewInit {
   preset = new Config();
   handyPreset = new Config();
   fancyPreset = new Config();
+  orbitPreset = new Config();
 
   constructor(public dialog: MatDialog) {}
 
@@ -31,9 +32,9 @@ export class AppComponent implements AfterViewInit {
     const canvas = document.getElementById('stage') as HTMLCanvasElement;
 
     // Verhindert Pull-to-Refresh und andere Touch-Events
-    canvas.addEventListener('touchstart', (event) => event.preventDefault(), { passive: false });
-    canvas.addEventListener('touchmove', (event) => event.preventDefault(), { passive: false });
-    canvas.addEventListener('touchend', (event) => event.preventDefault(), { passive: false });
+    canvas.addEventListener('touchstart', (event) => event.preventDefault(), {passive: false});
+    canvas.addEventListener('touchmove', (event) => event.preventDefault(), {passive: false});
+    canvas.addEventListener('touchend', (event) => event.preventDefault(), {passive: false});
 
     window.addEventListener('keydown', (event) => {
       if (event.key === 'f' || event.key === 'F') {
@@ -80,8 +81,129 @@ export class AppComponent implements AfterViewInit {
     this.fancyPreset.vy = -13.257555132044672;
     this.fancyPreset.x = 991.2524858805191;
     this.fancyPreset.y = 409.6417097531764;
-  }
 
+    this.orbitPreset.allballs = false;
+    this.orbitPreset.ball1 = true;
+    this.orbitPreset.ball2 = false;
+    this.orbitPreset.ball3 = false;
+    this.orbitPreset.ball4 = true;
+    //
+    // allballs
+    //   :
+    //   false
+    // b
+    //   :
+    //   150
+    // ball1
+    //   :
+    //   true
+    // ball2
+    //   :
+    //   false
+    // ball3
+    //   :
+    //   false
+    // ball4
+    //   :
+    //   true
+    // bounce
+    //   :
+    //   -1
+    // canvasheight
+    //   :
+    //   800
+    // canvaswidth
+    //   :
+    //   1400
+    // clearcanvas
+    //   :
+    //   false
+    // colorbrightness
+    //   :
+    //   150
+    // colordarkness
+    //   :
+    //   255
+    // colorspeed
+    //   :
+    //   1
+    // currentX
+    //   :
+    //   648.0034897721011
+    // currentY
+    //   :
+    //   242.19874841405172
+    // disableBorders
+    //   :
+    //   false
+    // disablegravity
+    //   :
+    //   false
+    // disablespeedloss
+    //   :
+    //   true
+    // enableOrbit
+    //   :
+    //   true
+    // friction
+    //   :
+    //   0.01
+    // fullscreen
+    //   :
+    //   false
+    // g
+    //   :
+    //   196
+    // gravity
+    //   :
+    //   0.5
+    // isDirectionRight
+    //   :
+    //   false
+    // isMousedown
+    //   :
+    //   false
+    // lastX
+    //   :
+    //   660.5056496650034
+    // lastY
+    //   :
+    //   234.50928242974788
+    // mouseX
+    //   :
+    //   1318.488157216696
+    // mouseY
+    //   :
+    //   677.3599295832025
+    // r
+    //   :
+    //   256
+    // radius
+    //   :
+    //   30
+    // resistance
+    //   :
+    //   0.995
+    // smoothlines
+    //   :
+    //   true
+    // vx
+    //   :
+    //   -12.502159892902267
+    // vy
+    //   :
+    //   7.689465984303848
+    // wasMousedown
+    //   :
+    //   false
+    // x
+    //   :
+    //   648.0034897721011
+    // y
+    //   :
+    //   242.19874841405172
+
+  }
   startAnimation(): void {
     const canvas = document.getElementById('stage') as HTMLCanvasElement;
     const container = canvas.parentElement as HTMLElement;
@@ -262,6 +384,7 @@ export class AppComponent implements AfterViewInit {
 
       frameCounter++;
       if (frameCounter % 60 === 0) {
+        console.log(this.config)
         this.saveConfigToCookie();
       }
 

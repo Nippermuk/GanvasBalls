@@ -20,7 +20,8 @@
         <mat-icon>settings</mat-icon>
       </button>
       <button mat-raised-button (click)="selectPreset(1)">Preset</button>
-      <button mat-raised-button (click)="selectPreset(2)">Handy Preset</button>
+      <button mat-raised-button (click)="selectPreset(2)">Fancy Preset</button>
+      <button mat-raised-button (click)="selectPreset(3)">Handy Preset</button>
       <button mat-raised-button (click)="clearCanvas()">Clear!</button>
     </div>
     <h1>speed: {{Math.round(Math.hypot(Math.abs(this.config.lastX - this.config.currentX), Math.abs(this.config.lastY - this.config.currentY)))}}</h1>

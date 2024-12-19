@@ -23,6 +23,7 @@ export class AppComponent implements AfterViewInit {
   config = new Config();
   preset = new Config();
   handyPreset = new Config();
+  fancyPreset = new Config();
 
   constructor(public dialog: MatDialog) {}
 
@@ -54,12 +55,31 @@ export class AppComponent implements AfterViewInit {
       lastTap = currentTime;
     });
 
-    this.startAnimation();
     this.loadConfigFromCookie(); // Config beim Laden initialisieren
+    this.startAnimation();
 
     this.handyPreset.canvasheight = 3000;
     this.handyPreset.radius = 50;
     this.handyPreset.clearcanvas = false;
+
+    this.fancyPreset.allballs = false;
+    this.fancyPreset.b = 220;
+    this.fancyPreset.ball1 = true;
+    this.fancyPreset.ball2 = false;
+    this.fancyPreset.ball3 = false;
+    this.fancyPreset.ball4 = true;
+    this.fancyPreset.clearcanvas = false;
+    this.fancyPreset.colorbrightness = 150;
+    this.fancyPreset.currentX = 991.2524858805191;
+    this.fancyPreset.currentY = 409.6417097531764;
+    this.fancyPreset.disablegravity = false;
+    this.fancyPreset.lastX = 1015.7192256594665;
+    this.fancyPreset.lastY = 422.8992648852211;
+    this.fancyPreset.radius = 30;
+    this.fancyPreset.vx = 24.466739778947385;
+    this.fancyPreset.vy = -13.257555132044672;
+    this.fancyPreset.x = 991.2524858805191;
+    this.fancyPreset.y = 409.6417097531764;
   }
 
   startAnimation(): void {
@@ -85,6 +105,7 @@ export class AppComponent implements AfterViewInit {
         ctx.clearRect(0, 0, canvas.width, canvas.height); // Canvas leeren
       }
 
+      //calculate coolor
       if (this.config.r >= this.config.colordarkness && this.config.g <= this.config.colordarkness && this.config.b <= this.config.colorbrightness) {
         this.config.g += this.config.colorspeed;
       } else if (this.config.r >= this.config.colorbrightness && this.config.g >= this.config.colordarkness && this.config.b <= this.config.colorbrightness) {
@@ -103,11 +124,6 @@ export class AppComponent implements AfterViewInit {
         this.config.b = this.config.colorbrightness;
       }
 
-      //
-      // console.log(currentX)
-      // console.log(lastX)
-      // console.log(speed);
-
       if(this.config.isMousedown) {
         this.config.x = this.config.mouseX
         this.config.y = this.config.mouseY
@@ -120,48 +136,51 @@ export class AppComponent implements AfterViewInit {
           this.config.currentY = this.config.y;
         }
         this.config.vy = this.config.currentY - this.config.lastY;
+        this.config.vx = this.config.currentX - this.config.lastX;
       }
-      this.config.speed = Math.abs(this.config.currentX - this.config.lastX);
-
-      this.config.isDirectionRight = this.config.currentX > this.config.lastX;
 
       if (this.config.y > canvas.height - this.config.radius && this.config.vy > 0) { // Boden erreicht
-        // this.config.y = canvas.height - this.config.radius; // Ball bleibt auf dem Boden
         this.config.vy *= this.config.bounce; // Rücksprung (Geschwindigkeit umkehren)
       } else if (this.config.y < this.config.radius && this.config.vy < 0) { // Decke erreicht
-        // this.config.y = this.config.radius; // Ball bleibt auf dem Boden
         this.config.vy *= this.config.bounce; // Rücksprung (Geschwindigkeit umkehren)
-      } else if(!this.config.disablegravity){
-        if (this.config.y < canvas.height/2){
-          this.config.vy += this.config.gravity; // Geschwindigkeit durch Schwerkraft erhöhen
-        } else if (this.config.y > canvas.height/2) {
-          this.config.vy -= this.config.gravity; // Geschwindigkeit durch Schwerkraft erhöhen
+      }
+
+      if (this.config.x > canvas.width - this.config.radius && this.config.vx > 0) { // Boden erreicht
+        this.config.vx *= this.config.bounce; // Rücksprung (Geschwindigkeit umkehren)
+      } else if (this.config.x < this.config.radius && this.config.vx < 0) { // Decke erreicht
+        this.config.vx *= this.config.bounce; // Rücksprung (Geschwindigkeit umkehren)
+      }
+
+      if(!this.config.disablegravity){
+        if(this.config.enableOrbit) {
+          const dx = (canvas.width / 2) - this.config.x; // Abstand zum Gravitationspunkt (X)
+          const dy = (canvas.height / 2) - this.config.y; // Abstand zum Gravitationspunkt (Y)
+          const distance = Math.sqrt(dx * dx + dy * dy); // Abstand berechnen
+
+          // Normierte Kraftvektoren
+          const forceX = (dx / distance) * this.config.gravity;
+          const forceY = (dy / distance) * this.config.gravity;
+
+          this.config.vx += forceX;
+          this.config.vy += forceY;
+        } else {
+          if (this.config.y < canvas.height/2){
+            this.config.vy += this.config.gravity; // Geschwindigkeit durch Schwerkraft erhöhen
+          } else if (this.config.y > canvas.height/2) {
+            this.config.vy -= this.config.gravity; // Geschwindigkeit durch Schwerkraft erhöhen
+          }
         }
       }
       if(!this.config.isMousedown) {
         this.config.y += this.config.vy; // Position ändern
+        this.config.x += this.config.vx;
       }
 
       if(!this.config.disablespeedloss) {
-        this.config.speed *= this.config.resistance;
-        this.config.speed -= this.config.friction;
-      }
-      if (this.config.speed < 0) {
-        this.config.speed = 0;
-      }
-
-      if (this.config.x + this.config.radius > canvas.width) {
-        this.config.isDirectionRight = false;
-      }
-      if (this.config.x - this.config.radius < 0) {
-        this.config.isDirectionRight = true;
-      }
-      if(!this.config.isMousedown) {
-        if(this.config.isDirectionRight){
-          this.config.x += this.config.speed;
-        } else {
-          this.config.x -= this.config.speed;
-        }
+        this.config.vx *= this.config.resistance;
+        this.config.vx -= this.config.friction;
+        this.config.vy *= this.config.resistance;
+        this.config.vy -= this.config.friction;
       }
 
       ctx.fillStyle = `rgb(${this.config.r} ${this.config.g} ${this.config.b})`;
@@ -292,13 +311,18 @@ export class AppComponent implements AfterViewInit {
 
   }
 
+
   selectPreset(preset: number) {
     switch (preset) {
       case 1:
         this.config = this.preset;
         break;
       case 2:
+        this.config = this.fancyPreset;
+        break;
+      case 3:
         this.config = this.handyPreset;
+        break;
     }
   }
 
@@ -315,10 +339,6 @@ export class AppComponent implements AfterViewInit {
     const cookies = document.cookie.split('; ');
     const cookie = cookies.find(row => row.startsWith(name + '='));
     return cookie ? cookie.split('=')[1] : null;
-  }
-
-  deleteCookie(name: string): void {
-    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/`;
   }
 
   saveConfigToCookie(): void {
@@ -381,12 +401,11 @@ export class AppComponent implements AfterViewInit {
 }
 export class Config {
   x = 50; // Startposition des Kreises
-  speed = 3; // Geschwindigkeit
-  resistance = 0.995;
-  friction = 0.01; // Konstante Bodenreibung
+  vx = 3; // Geschwindigkeit
   y = 50; // Startposition des Balls
   vy = 2; // Startgeschwindigkeit
-  isDirectionRight = true;
+  resistance = 0.995;
+  friction = 0.01; // Konstante Bodenreibung
   currentX = this.x;
   currentY = this.y;
   lastX = this.x;
@@ -416,4 +435,5 @@ export class Config {
   canvasheight = 800;
   canvaswidth = 1400;
   fullscreen = false;
+  enableOrbit = true;
 }

@@ -4,6 +4,9 @@
   <!-- Physik-Einstellungen -->
   <h2>Physics Settings</h2>
   <div class="form-group">
+    <mat-checkbox [(ngModel)]="data.config.enableOrbit">
+      Enable Orbit
+    </mat-checkbox>
     <mat-form-field appearance="fill">
       <mat-label>Resistance</mat-label>
       <input matInput type="number" [(ngModel)]="data.config.resistance" />

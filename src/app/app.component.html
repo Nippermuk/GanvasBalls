@@ -23,6 +23,7 @@
       <button mat-raised-button (click)="selectPreset(3)">Handy Preset</button>
       <button mat-raised-button (click)="selectPreset(4)">Orbit Preset</button>
       <button mat-raised-button (click)="clearCanvas()">Clear!</button>
+      <button mat-raised-button (click)="toggleFullscreen()">Fullscreen</button>
     </div>
 
     <h1 *ngIf="!config.fullscreen">speed: {{Math.round(Math.hypot(Math.abs(this.config.lastX - this.config.currentX), Math.abs(this.config.lastY - this.config.currentY)))}}</h1>

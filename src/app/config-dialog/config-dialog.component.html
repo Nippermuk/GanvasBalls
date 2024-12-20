@@ -4,7 +4,7 @@
   <!-- Physik-Einstellungen -->
   <h2>Physics Settings</h2>
   <div class="form-group">
-    <mat-checkbox [(ngModel)]="data.config.enableOrbit">
+    <mat-checkbox [(ngModel)]="data.config.enableOrbit" (change)="onEnableOrbitChange($event.checked)">
       Enable Orbit
     </mat-checkbox>
     <mat-checkbox [(ngModel)]="data.config.disableBorders">
@@ -21,7 +21,7 @@
     <mat-checkbox [(ngModel)]="data.config.disablespeedloss">
       Disable Speed Loss
     </mat-checkbox>
-    <mat-checkbox [(ngModel)]="data.config.disablegravity">
+    <mat-checkbox [(ngModel)]="data.config.disablegravity" (change)="onDisableGravityChange($event.checked)">
       Disable Gravity
     </mat-checkbox>
     <mat-form-field appearance="fill">

@@ -87,126 +87,26 @@ export class AppComponent implements AfterViewInit {
     this.orbitPreset.ball2 = false;
     this.orbitPreset.ball3 = false;
     this.orbitPreset.ball4 = true;
-    //
-    // allballs
-    //   :
-    //   false
-    // b
-    //   :
-    //   150
-    // ball1
-    //   :
-    //   true
-    // ball2
-    //   :
-    //   false
-    // ball3
-    //   :
-    //   false
-    // ball4
-    //   :
-    //   true
-    // bounce
-    //   :
-    //   -1
-    // canvasheight
-    //   :
-    //   800
-    // canvaswidth
-    //   :
-    //   1400
-    // clearcanvas
-    //   :
-    //   false
-    // colorbrightness
-    //   :
-    //   150
-    // colordarkness
-    //   :
-    //   255
-    // colorspeed
-    //   :
-    //   1
-    // currentX
-    //   :
-    //   648.0034897721011
-    // currentY
-    //   :
-    //   242.19874841405172
-    // disableBorders
-    //   :
-    //   false
-    // disablegravity
-    //   :
-    //   false
-    // disablespeedloss
-    //   :
-    //   true
-    // enableOrbit
-    //   :
-    //   true
-    // friction
-    //   :
-    //   0.01
-    // fullscreen
-    //   :
-    //   false
-    // g
-    //   :
-    //   196
-    // gravity
-    //   :
-    //   0.5
-    // isDirectionRight
-    //   :
-    //   false
-    // isMousedown
-    //   :
-    //   false
-    // lastX
-    //   :
-    //   660.5056496650034
-    // lastY
-    //   :
-    //   234.50928242974788
-    // mouseX
-    //   :
-    //   1318.488157216696
-    // mouseY
-    //   :
-    //   677.3599295832025
-    // r
-    //   :
-    //   256
-    // radius
-    //   :
-    //   30
-    // resistance
-    //   :
-    //   0.995
-    // smoothlines
-    //   :
-    //   true
-    // vx
-    //   :
-    //   -12.502159892902267
-    // vy
-    //   :
-    //   7.689465984303848
-    // wasMousedown
-    //   :
-    //   false
-    // x
-    //   :
-    //   648.0034897721011
-    // y
-    //   :
-    //   242.19874841405172
-
+    this.orbitPreset.x = 700;
+    this.orbitPreset.y = 200;
+    this.orbitPreset.vx = 7.5;
+    this.orbitPreset.vy = 5;
+    this.orbitPreset.currentX = 700;
+    this.orbitPreset.currentY = 200;
+    this.orbitPreset.lastX = 680;
+    this.orbitPreset.lastY = 187;
+    this.orbitPreset.colorbrightness = 150;
+    this.orbitPreset.colorspeed = 1;
+    this.orbitPreset.radius = 30;
+    this.orbitPreset.disablespeedloss = true;
+    this.orbitPreset.disableBorders = true;
+    this.orbitPreset.disablegravity = false;
+    this.orbitPreset.clearcanvas = false;
+    this.orbitPreset.enableOrbit = true;
+    this.orbitPreset.r = 150;
   }
   startAnimation(): void {
     const canvas = document.getElementById('stage') as HTMLCanvasElement;
-    const container = canvas.parentElement as HTMLElement;
     const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
     //TODO: Fix
     //const resizeCanvas = () => {
@@ -448,11 +348,16 @@ export class AppComponent implements AfterViewInit {
       case 3:
         this.config = this.handyPreset;
         break;
+      case 4:
+        this.config = this.orbitPreset;
+        break;
     }
   }
 
   clearCanvas() {
-    // ctx.clearRect(0, 0, canvas.width, canvas.height); // Canvas leeren
+    const canvas = document.getElementById('stage') as HTMLCanvasElement;
+    const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // Canvas leeren
   }
 
   setCookie(name: string, value: string, days: number): void {

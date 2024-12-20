@@ -57,4 +57,14 @@ export class ConfigDialogComponent {
   createPreset() {
     this.data.preset = JSON.parse(JSON.stringify(this.data.config));
   }
+
+  onEnableOrbitChange(checked: boolean) {
+    this.data.config.enableOrbit = checked;
+    this.data.config.disablegravity = false;
+  }
+
+  onDisableGravityChange(checked: boolean) {
+    this.data.config.disablegravity = checked;
+    this.data.config.enableOrbit = false;
+  }
 }

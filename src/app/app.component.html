@@ -1,5 +1,5 @@
-<div style="display: flex; align-items: center;">
-  <div class="canvas-container">
+<div class="container">
+  <div class="inner-container canvas-container">
     <canvas
       id="stage"
       [width]="config.canvaswidth"
@@ -14,7 +14,7 @@
     </canvas>
     <div class="resize-handle"></div>
   </div>
-  <div *ngIf="!config.fullscreen" style="display: flex; flex-direction: column">
+  <div class="inner-container" *ngIf="!config.fullscreen">
       <button mat-icon-button (click)="openConfigDialog()">
         <mat-icon>settings</mat-icon>
       </button>

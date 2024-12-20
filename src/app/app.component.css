@@ -7,6 +7,7 @@
 .inner-container {
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
 }
 
 /* Styles for mobile screens */

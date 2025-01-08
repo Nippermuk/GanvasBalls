@@ -149,6 +149,9 @@ export class AppComponent implements AfterViewInit {
       if(this.config.isMousedown) {
         this.config.x = this.config.mouseX
         this.config.y = this.config.mouseY
+        if(this.config.clearCanvasOnClick) {
+          this.clearCanvas();
+        }
         if(!this.config.wasMousedown) {
           console.log("click")
           this.config.wasMousedown = true;
@@ -319,6 +322,7 @@ export class AppComponent implements AfterViewInit {
     const canvas = document.getElementById('stage') as HTMLCanvasElement;
     const rect = canvas.getBoundingClientRect();
 
+
     if (event instanceof MouseEvent) {
       // Desktop: Maus-Position
       const scaleX = canvas.width / rect.width; // Verhältnis der Breite
@@ -468,6 +472,7 @@ export class Config {
   canvasheight = 800;
   canvaswidth = 1400;
   fullscreen = false;
-  enableOrbit = true;
+  enableOrbit = false;
   disableBorders = false;
+  clearCanvasOnClick = true;
 }

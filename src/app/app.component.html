@@ -26,6 +26,6 @@
       <button mat-raised-button (click)="toggleFullscreen()">Fullscreen</button>
     </div>
 
-    <h1 *ngIf="!config.fullscreen">speed: {{Math.round(Math.hypot(Math.abs(this.config.lastX - this.config.currentX), Math.abs(this.config.lastY - this.config.currentY)))}}</h1>
+    <h1 class="speedtext" *ngIf="!config.fullscreen">speed: {{Math.round(Math.hypot(Math.abs(this.config.lastX - this.config.currentX), Math.abs(this.config.lastY - this.config.currentY)))}}</h1>
 
 </div>

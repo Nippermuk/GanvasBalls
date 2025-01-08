@@ -61,3 +61,7 @@ canvas:hover {
   background: rgba(0, 0, 0, 0.5);
   cursor: se-resize; /* Zeigt den Resize-Cursor an */
 }
+
+.speedtext{
+  width: 25%;
+}
